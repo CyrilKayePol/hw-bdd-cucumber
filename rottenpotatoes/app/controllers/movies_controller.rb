@@ -27,6 +27,7 @@ class MoviesController < ApplicationController
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
     @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
+	
   end
 
   def new
@@ -38,6 +39,10 @@ class MoviesController < ApplicationController
     flash[:notice] = "#{@movie.title} was successfully created."
     redirect_to movies_path
   end
+  
+	def movie_params
+		params.require(:movie).permit(:title, :rating, :release_date)
+	end
 
   def edit
     @movie = Movie.find params[:id]
